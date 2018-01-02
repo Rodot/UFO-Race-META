@@ -77,6 +77,7 @@ boolean drawNewHighscore(unsigned int score){
   gb.sound.playOK();
   while(1){
     if(gb.update()){
+      gb.display.clear();
       gb.display.cursorX = 0+random(0,2);
       gb.display.cursorY = 0+random(0,2);
       gb.display.print("NEW HIGHSCORE");
