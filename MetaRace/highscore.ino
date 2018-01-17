@@ -91,12 +91,12 @@ boolean drawNewHighscore(unsigned int score){
       gb.display.print(highscore[NUM_HIGHSCORE-1]);
       gb.display.cursorX = 0;
       gb.display.cursorY = 40;
-      gb.display.print("\25:Save \27:Exit");
+      gb.display.print("\25:Save \26:Exit");
       if(gb.buttons.pressed(BUTTON_A)){
         gb.sound.playOK();
         return true;
       }
-      if(gb.buttons.pressed(BUTTON_C)){
+      if(gb.buttons.pressed(BUTTON_B)){
         gb.sound.playCancel();
         return false;
       }
