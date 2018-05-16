@@ -15,7 +15,7 @@ void saveHighscore(unsigned int score){
   if(score < highscore[NUM_HIGHSCORE-1]){//if it's a highscore
     if(drawNewHighscore(score)){
       gb.getDefaultName(name[NUM_HIGHSCORE-1]);
-      gb.keyboard(name[NUM_HIGHSCORE-1], NAMELENGTH+1);
+      gb.gui.keyboard("Name", name[NUM_HIGHSCORE-1]);
       highscore[NUM_HIGHSCORE-1] = score;
       for(byte i=NUM_HIGHSCORE-1; i>0; i--){ //bubble sorting FTW
         if(highscore[i-1] > highscore[i]){
@@ -40,7 +40,7 @@ void saveHighscore(unsigned int score){
     }
   }
   else{
-    gb.popup("NEW LAP!",20);
+    gb.gui.popup("NEW LAP!",20);
   }
 }
 
