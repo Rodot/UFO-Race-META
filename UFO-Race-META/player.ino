@@ -5,6 +5,10 @@ typedef struct {
 
 Ufo player;
 
+const Gamebuino_Meta::Sound_FX mySfx[] = {
+  {Gamebuino_Meta::Sound_FX_Wave::NOISE, 0, 110, -1, 65, 48, 35},
+};
+
 void initPlayer() {
   player.radius = 3;
   player.x = 20;
@@ -18,10 +22,11 @@ void initPlayer() {
 void updatePlayer() {
 
   if (gb.metaMode.isActive()) {
-    player.angle += 0.31415;
+    player.angle += 0.3;
     if (gb.buttons.pressed(BUTTON_A)) {
-      player.vx += cos(player.angle) * 5;
-      player.vy += sin(player.angle) * 5;
+      player.vx += cos(player.angle) * 6;
+      player.vy += sin(player.angle) * 6;
+      gb.sound.fx(mySfx);
     }
   }
   else {
@@ -175,9 +180,12 @@ void drawPlayer() {
   if (!(x_screen < -16 || x_screen > gb.display.width() || y_screen < -16 || y_screen > gb.display.height())) {
     gb.display.fillCircle(x_screen, y_screen, player.radius);
     gb.display.setColor(WHITE);
-    gb.display.drawLine(x_screen, y_screen, x_screen + cos(player.angle) * 4, y_screen + sin(player.angle) * 4);
-    gb.display.setColor(BLACK);
-    if (gb.metaMode.isActive())
+    if (gb.metaMode.isActive()) {
       gb.lights.drawPixel(cos(player.angle) > 0 ? 1 : 0, map((int)100 * sin(player.angle), -100, 100, 0, 4), ORANGE);
+      gb.display.setColor(ORANGE);
+    }
+    gb.display.drawLine(x_screen, y_screen, x_screen + cos(player.angle) * 3.4, y_screen + sin(player.angle) * 3.4);
+    gb.display.setColor(BLACK);
+
   }
 }
