@@ -40,7 +40,8 @@ void saveHighscore(unsigned int score){
     }
   }
   else{
-    gb.gui.popup("NEW LAP!",20);
+      String scoreStr = "Time: " + String(score);
+      gb.gui.popup(scoreStr.c_str(), 20);
   }
 }
 
