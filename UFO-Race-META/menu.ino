@@ -9,8 +9,9 @@ const char* pauseMenu[PAUSEMENULENGTH] = {
 };
 
 void drawMenu(){
+  gb.lights.clear();
   gb.display.setFont(font5x7);
-  switch(gb.menu(pauseMenu, PAUSEMENULENGTH)){
+  switch(gb.gui.menu("Menu", pauseMenu, PAUSEMENULENGTH)){
   case 0: //play
     initGame();
     play();

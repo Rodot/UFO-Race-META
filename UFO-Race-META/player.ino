@@ -5,6 +5,10 @@ typedef struct {
 
 Ufo player;
 
+const Gamebuino_Meta::Sound_FX mySfx[] = {
+  {Gamebuino_Meta::Sound_FX_Wave::NOISE, 0, 110, -1, 65, 48, 35},
+};
+
 void initPlayer() {
   player.radius = 3;
   player.x = 20;
@@ -17,21 +21,30 @@ void initPlayer() {
 
 void updatePlayer() {
 
-  if (gb.buttons.repeat(BUTTON_RIGHT, 1)) {
-    player.angle += 0.31415 / 2;
+  if (gb.metaMode.isActive()) {
+    player.angle += 0.3;
+    if (gb.buttons.pressed(BUTTON_A)) {
+      player.vx += cos(player.angle) * 6;
+      player.vy += sin(player.angle) * 6;
+      gb.sound.fx(mySfx);
+    }
   }
-  if (gb.buttons.repeat(BUTTON_LEFT, 1)) {
-    player.angle -= 0.31415 / 2;
+  else {
+    if (gb.buttons.repeat(BUTTON_RIGHT, 1)) {
+      player.angle += 0.31415 / 2;
+    }
+    if (gb.buttons.repeat(BUTTON_LEFT, 1)) {
+      player.angle -= 0.31415 / 2;
+    }
+    if (gb.buttons.repeat(BUTTON_A, 1)) {
+      player.v += 0.02;
+    }
+    if (gb.buttons.repeat(BUTTON_B, 1)) {
+      player.v *= 0.8;
+      player.vx *= 0.8;
+      player.vy *= 0.8;
+    }
   }
-  if (gb.buttons.repeat(BUTTON_A, 1)) {
-    player.v += 0.02;
-  }
-  if (gb.buttons.repeat(BUTTON_B, 1)) {
-    player.v *= 0.8;
-    player.vx *= 0.8;
-    player.vy *= 0.8;
-  }
-
   byte currentTile = getTile(player.x / 16, player.y / 16);
 
   //friction
@@ -88,9 +101,9 @@ void updatePlayer() {
       b = 17;
       break;
     case 6: //ice
-      r = 125/4;
-      g = 187/4;
-      b = 255/4;
+      r = 125 / 4;
+      g = 187 / 4;
+      b = 255 / 4;
       break;
     default :
       r = g = b = 0;
@@ -167,7 +180,12 @@ void drawPlayer() {
   if (!(x_screen < -16 || x_screen > gb.display.width() || y_screen < -16 || y_screen > gb.display.height())) {
     gb.display.fillCircle(x_screen, y_screen, player.radius);
     gb.display.setColor(WHITE);
-    gb.display.drawLine(x_screen, y_screen, x_screen + cos(player.angle) * 4, y_screen + sin(player.angle) * 4);
+    if (gb.metaMode.isActive()) {
+      gb.lights.drawPixel(cos(player.angle) > 0 ? 1 : 0, map((int)100 * sin(player.angle), -100, 100, 0, 4), ORANGE);
+      gb.display.setColor(ORANGE);
+    }
+    gb.display.drawLine(x_screen, y_screen, x_screen + cos(player.angle) * 3.4, y_screen + sin(player.angle) * 3.4);
     gb.display.setColor(BLACK);
+
   }
 }
