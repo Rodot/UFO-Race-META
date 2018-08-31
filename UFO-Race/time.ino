@@ -14,9 +14,7 @@ void updateTime(){
     }
     else{
       if(time > 100){
-        gb.display.setFont(font5x7);
         saveHighscore(time);
-        gb.display.setFont(font3x5);
         initTime();
         initPlayer();
       }
@@ -28,8 +26,10 @@ void updateTime(){
 }
 
 void drawTime(){
+  gb.display.setColor(BLACK);
+  gb.display.fillRect(0, gb.display.height() - gb.display.fontHeight, 4 * gb.display.fontWidth, gb.display.fontHeight + 1);
   gb.display.cursorX = 0;
-  gb.display.cursorY = gb.display.height() - gb.display.fontHeight;
-  gb.display.setColor(BLACK,WHITE);
+  gb.display.cursorY = gb.display.height() - gb.display.fontHeight + 1;
+  gb.display.setColor(WHITE,BLACK);
   gb.display.print(time);
 }

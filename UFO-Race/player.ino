@@ -23,7 +23,7 @@ void updatePlayer() {
 
   if (gb.metaMode.isActive()) {
     player.angle += 0.3;
-    if (gb.buttons.pressed(BUTTON_A)) {
+    if (gb.buttons.released(BUTTON_A)) {
       player.vx += cos(player.angle) * 6;
       player.vy += sin(player.angle) * 6;
       gb.sound.fx(mySfx);
@@ -178,6 +178,7 @@ void drawPlayer() {
   int x_screen = (int)player.x - camera_x;
   int y_screen = (int)player.y - camera_y;
   if (!(x_screen < -16 || x_screen > gb.display.width() || y_screen < -16 || y_screen > gb.display.height())) {
+    gb.display.setColor(BLACK);
     gb.display.fillCircle(x_screen, y_screen, player.radius);
     gb.display.setColor(WHITE);
     if (gb.metaMode.isActive()) {

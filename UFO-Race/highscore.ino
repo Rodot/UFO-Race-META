@@ -15,7 +15,7 @@ void saveHighscore(unsigned int score){
   if(score < highscore[NUM_HIGHSCORE-1]){//if it's a highscore
     if(drawNewHighscore(score)){
       gb.getDefaultName(name[NUM_HIGHSCORE-1]);
-      gb.gui.keyboard("Name", name[NUM_HIGHSCORE-1]);
+      gb.gui.keyboard("NEW HIGHSCORE!NAME?", name[NUM_HIGHSCORE-1]);
       highscore[NUM_HIGHSCORE-1] = score;
       for(byte i=NUM_HIGHSCORE-1; i>0; i--){ //bubble sorting FTW
         if(highscore[i-1] > highscore[i]){
@@ -49,7 +49,6 @@ void drawHighScores(){
   while(true){
     if(gb.update()){
       gb.display.clear();
-      gb.display.setFont(font5x7);
       gb.display.cursorX = 9+random(0,2);
       gb.display.cursorY = 0+random(0,2);
       gb.display.println("BEST TIMES");
@@ -65,7 +64,7 @@ void drawHighScores(){
         gb.display.cursorY = gb.display.fontHeight*2 + gb.display.fontHeight*thisScore;
         gb.display.println(highscore[thisScore]);
       }
-      if(gb.buttons.pressed(BUTTON_A) || gb.buttons.pressed(BUTTON_B) || gb.buttons.pressed(BUTTON_C)){
+      if(gb.buttons.released(BUTTON_A) || gb.buttons.released(BUTTON_B) || gb.buttons.released(BUTTON_C)){
         gb.sound.playOK();
         break;
       }
@@ -76,31 +75,39 @@ void drawHighScores(){
 boolean drawNewHighscore(unsigned int score){
   //gb.sound.playPattern(highscore_sound, 0);
   gb.sound.playOK();
+  int timer = 150;
   while(1){
     if(gb.update()){
-      gb.display.clear();
-      gb.display.cursorX = 0+random(0,2);
-      gb.display.cursorY = 0+random(0,2);
-      gb.display.print("NEW HIGHSCORE");
-      gb.display.cursorX = 0;
-      gb.display.cursorY = 12;
-      gb.display.print("You      ");
-      gb.display.print(score);
-      gb.display.print("\nBest     ");
-      gb.display.print(highscore[0]);
-      gb.display.print("\nWorst    ");
-      gb.display.print(highscore[NUM_HIGHSCORE-1]);
-      gb.display.cursorX = 0;
-      gb.display.cursorY = 40;
-      gb.display.print("\25:Save \26:Exit");
-      if(gb.buttons.pressed(BUTTON_A)){
-        gb.sound.playOK();
+      timer--;
+      if(!timer){
         return true;
       }
-      if(gb.buttons.pressed(BUTTON_B)){
-        gb.sound.playCancel();
-        return false;
+      if(gb.buttons.released(BUTTON_B)){
+        return true;
       }
+      gb.display.clear();
+      gb.display.cursorX = 0;
+      gb.display.cursorY = 0;
+      gb.display.print("NEW HIGHSCORE!");
+      gb.display.cursorX = 0+random(0,2);
+      gb.display.cursorY = 15+random(0,2);
+      gb.display.setFontSize(3);
+      gb.display.println(score);
+      gb.display.setFontSize(1);
+      
+      gb.display.cursorX = 0;
+      gb.display.cursorY = gb.display.height() - (gb.display.fontHeight * 5);
+      gb.display.setColor(LIGHTGREEN);
+      gb.display.print("\nBest  ");
+      gb.display.print(highscore[0]);
+      gb.display.setColor(RED);
+      gb.display.print("\nWorst ");
+      gb.display.print(highscore[NUM_HIGHSCORE-1]);
+      
+      gb.display.cursorX = 0;
+      gb.display.cursorY = gb.display.height() - (gb.display.fontHeight * 1);
+      gb.display.setColor(GRAY);
+      gb.display.print("B: SAVE");
     }
   }
 }

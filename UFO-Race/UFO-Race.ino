@@ -1,8 +1,5 @@
 #include <Gamebuino-Meta.h>
 
-extern const byte font3x5[];
-extern const byte font5x7[];
-
 //global variables
 int camera_x, camera_y;
 
@@ -38,11 +35,10 @@ void initGame(){
 }
 
 void play(){
-  gb.display.setFont(font3x5);
   while(1){
     if(gb.update()){
-      //pause the game if C is pressed
-      if(gb.buttons.pressed(BUTTON_C)){
+      //pause the game if C is released
+      if(gb.buttons.released(BUTTON_C)){
         return;
       }
 

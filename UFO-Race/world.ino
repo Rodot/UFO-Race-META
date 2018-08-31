@@ -47,13 +47,13 @@ const Color spritesColor[NUM_SPRITES] = {
   LIGHTBLUE,//ice,               //6
   BLACK,    //start,             //7
   RED,      //block_bouncer,     //8
-  BLACK,    //block_single,      //9
-  BLACK,    //block_right,       //A
-  BLACK,    //block_down,        //B
-  BLACK,    //block_left,        //C
-  BLACK,    //block_up,          //D
-  BLACK,    //block_horizontal,  //E
-  BLACK,    //block_vertical     //F
+  BROWN,    //block_single,      //9
+  BROWN,    //block_right,       //A
+  BROWN,    //block_down,        //B
+  BROWN,    //block_left,        //C
+  BROWN,    //block_up,          //D
+  BROWN,    //block_horizontal,  //E
+  BROWN,    //block_vertical     //F
 };
 
 #define WORLD_W 32
